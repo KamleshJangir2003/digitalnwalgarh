@@ -571,6 +571,19 @@ function App() {
                   Reset Price
                 </button>
               </div>
+
+              <div className="sidebar-products">
+                <h4>Popular Products</h4>
+                {allProducts.slice(0, 5).map((p) => (
+                  <div key={p.id} className="sidebar-product-item">
+                    <img src={p.image} alt={p.name} />
+                    <div>
+                      <p>{p.name}</p>
+                      <strong>Rs. {p.price.toFixed(2)}</strong>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </aside>
 
             <div className="shop-content">
