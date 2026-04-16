@@ -1776,6 +1776,13 @@
 .auth-card h2 { margin: 0 0 .25rem; font-size: 1.6rem; }
 .auth-sub { color: #666; margin: 0 0 1.5rem; font-size: .95rem; }
 .auth-error { background: #fee2e2; color: #b91c1c; padding: .75rem 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: .9rem; }
+.auth-success { background: #dcfce7; color: #15803d; padding: .75rem 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: .9rem; }
+.admin-secret-link { background: none; border: none; color: #6b7280; font-size: .75rem; cursor: pointer; opacity: 0.4; transition: opacity .2s; }
+.admin-secret-link:hover { opacity: 1; }
+.admin-tabs { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.5rem; border-bottom: 2px solid #e5e7eb; padding-bottom: .75rem; }
+.admin-tab-btn { background: none; border: 2px solid #e5e7eb; border-radius: 8px; padding: .45rem 1rem; font-size: .85rem; cursor: pointer; color: #6b7280; transition: all .2s; }
+.admin-tab-btn.active { background: var(--clr-primary, #6366f1); color: #fff; border-color: var(--clr-primary, #6366f1); }
+.admin-tab-btn:hover:not(.active) { border-color: #6366f1; color: #6366f1; }
 .auth-switch { margin-top: 1.25rem; text-align: center; font-size: .9rem; color: #555; }
 .auth-link { background: none; border: none; color: var(--accent, #6B3FA0); font-weight: 600; cursor: pointer; text-decoration: underline; }
 .auth-select {

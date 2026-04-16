@@ -3,6 +3,7 @@ import heroImg from './assets/hero.png'
 import './App.css'
 import LoginPage from './LoginPage'
 import RegisterPage from './RegisterPage'
+import AdminLoginPage from './AdminLoginPage'
 import UserDashboard from './UserDashboard'
 import AdminDashboard from './AdminDashboard'
 
@@ -230,9 +231,23 @@ function App() {
     setCartItems((prev) => prev.filter((item) => item.id !== productId))
   }
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     if (cartItems.length === 0) return
     if (!paymentMethod) return
+    const token = localStorage.getItem('token')
+    if (token && authUser) {
+      await fetch('http://localhost:5000/api/shop/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({
+          items: cartItems.map(i => ({ name: i.name, category: i.category, price: i.price, quantity: i.quantity })),
+          total: orderTotal,
+          paymentMethod,
+          userName: authUser.name,
+          userEmail: authUser.email,
+        }),
+      })
+    }
     setCartItems([])
     setPaymentMethod('')
     setCurrentPage('home')
@@ -270,6 +285,11 @@ function App() {
       </div>
     </article>
   )
+
+  // Admin ko poori website se alag rakho
+  if (authUser && authUser.role === 'admin') {
+    return <AdminDashboard user={authUser} onLogout={handleLogout} />
+  }
 
   return (
     <main className="page-shell">
@@ -1122,10 +1142,14 @@ function App() {
             <div className="contact-form-card">
               <form
                 className="checkout-form contact-form"
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                   e.preventDefault()
-                  if (!contactForm.name || !contactForm.email || !contactForm.message)
-                    return
+                  if (!contactForm.name || !contactForm.email || !contactForm.message) return
+                  await fetch('http://localhost:5000/api/shop/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(contactForm),
+                  })
                   setContactSubmitted(true)
                 }}
               >
@@ -1193,12 +1217,13 @@ function App() {
       {authPage === 'register' && (
         <RegisterPage onLogin={handleLogin} onSwitch={() => setAuthPage('login')} />
       )}
+      {authPage === 'admin-login' && (
+        <AdminLoginPage onLogin={handleLogin} onBack={() => setAuthPage(null)} />
+      )}
 
       {/* Dashboard */}
       {!authPage && currentPage === 'dashboard' && authUser && (
-        authUser.role === 'admin'
-          ? <AdminDashboard user={authUser} onLogout={handleLogout} />
-          : <UserDashboard user={authUser} onLogout={handleLogout} onShop={() => setCurrentPage('shop')} />
+        <UserDashboard user={authUser} onLogout={handleLogout} onShop={() => setCurrentPage('shop')} />
       )}
 
       {/* Quick View Modal */}
@@ -1400,6 +1425,7 @@ function App() {
           <div className="container footer-bottom__inner">
             <p>© {new Date().getFullYear()} DigiHook. All rights reserved.</p>
             <p>Made with ❤️ for digital entrepreneurs worldwide.</p>
+            <button type="button" className="admin-secret-link" onClick={() => setAuthPage('admin-login')}>Admin</button>
           </div>
         </div>
       </footer>

@@ -2,9 +2,8 @@ import { useState } from 'react'
 
 const API = 'http://localhost:5000/api/auth'
 
-export default function RegisterPage({ onLogin, onSwitch }) {
-  const [form, setForm] = useState({ name: '', email: '', password: '', role: 'user' })
-
+export default function AdminLoginPage({ onLogin, onBack }) {
+  const [form, setForm] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -13,13 +12,14 @@ export default function RegisterPage({ onLogin, onSwitch }) {
     setError('')
     setLoading(true)
     try {
-      const res = await fetch(`${API}/register`, {
+      const res = await fetch(`${API}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.message)
+      if (data.user.role !== 'admin') throw new Error('Access denied. Admins only.')
       localStorage.setItem('token', data.token)
       onLogin(data.user)
     } catch (err) {
@@ -32,29 +32,25 @@ export default function RegisterPage({ onLogin, onSwitch }) {
   return (
     <section className="auth-page container">
       <div className="auth-card">
-        <h2>Create Account</h2>
-        <p className="auth-sub">Join DigiHook and start selling digital products!</p>
+        <div className="dashboard-avatar admin-avatar" style={{ margin: '0 auto 1rem', width: 56, height: 56, fontSize: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>🛡</div>
+        <h2>Admin Login</h2>
+        <p className="auth-sub">Restricted access — Admins only.</p>
         {error && <div className="auth-error">{error}</div>}
         <form onSubmit={handleSubmit} className="checkout-form">
           <input
-            type="text" placeholder="Full Name" required
-            value={form.name} onChange={(e) => setForm(v => ({ ...v, name: e.target.value }))}
-          />
-          <input
-            type="email" placeholder="Email Address" required
+            type="email" placeholder="Admin Email" required
             value={form.email} onChange={(e) => setForm(v => ({ ...v, email: e.target.value }))}
           />
           <input
-            type="password" placeholder="Password (min 6 chars)" required minLength={6}
+            type="password" placeholder="Password" required
             value={form.password} onChange={(e) => setForm(v => ({ ...v, password: e.target.value }))}
           />
           <button type="submit" className="primary-action" disabled={loading}>
-            {loading ? 'Creating account...' : 'Register'}
+            {loading ? 'Logging in...' : '🔐 Admin Login'}
           </button>
         </form>
         <p className="auth-switch">
-          Already have an account?{' '}
-          <button type="button" className="auth-link" onClick={onSwitch}>Login here</button>
+          <button type="button" className="auth-link" onClick={onBack}>← Back to Site</button>
         </p>
       </div>
     </section>

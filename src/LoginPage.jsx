@@ -19,6 +19,7 @@ export default function LoginPage({ onLogin, onSwitch }) {
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.message)
+      if (data.user.role === 'admin') throw new Error('Admin? Use Admin Login instead.')
       localStorage.setItem('token', data.token)
       onLogin(data.user)
     } catch (err) {
