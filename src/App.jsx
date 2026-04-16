@@ -6,10 +6,10 @@ const products = [
   { id: 1, name: 'Instagram Growth Kit', category: 'Marketing', price: 49, description: 'Templates, hooks, and ready-to-sell content for creators.', image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&h=250&fit=crop' },
   { id: 2, name: 'Facebook Ads Mastery Pack', category: 'Marketing', price: 59, description: 'Complete ad templates and targeting strategies for Facebook.', image: 'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=400&h=250&fit=crop' },
   { id: 3, name: 'LinkedIn Lead Gen Kit', category: 'Marketing', price: 65, description: 'Scripts and templates to generate B2B leads on LinkedIn.', image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop' },
-  { id: 4, name: 'Email Marketing Swipe File', category: 'Marketing', price: 39, description: '100+ proven email templates for every stage of the funnel.', image: 'https://images.unsplash.com/photo-1596526131083-e8c633064dbc?w=400&h=250&fit=crop' },
+  { id: 4, name: 'Email Marketing Swipe File', category: 'Marketing', price: 39, description: '100+ proven email templates for every stage of the funnel.', image: 'https://images.unsplash.com/photo-1557200134-90327ee9fafa?w=400&h=250&fit=crop' },
   { id: 5, name: 'Pinterest Traffic Blueprint', category: 'Marketing', price: 44, description: 'Pin templates and strategy to drive massive organic traffic.', image: 'https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=400&h=250&fit=crop' },
   { id: 6, name: 'YouTube SEO Toolkit', category: 'Marketing', price: 52, description: 'Rank your videos faster with proven SEO scripts and tools.', image: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=400&h=250&fit=crop' },
-  { id: 7, name: 'TikTok Viral Content Pack', category: 'Marketing', price: 47, description: '50+ viral TikTok scripts and hooks for rapid growth.', image: 'https://images.unsplash.com/photo-1611605698335-8441fbfd049b?w=400&h=250&fit=crop' },
+  { id: 7, name: 'TikTok Viral Content Pack', category: 'Marketing', price: 47, description: '50+ viral TikTok scripts and hooks for rapid growth.', image: 'https://images.unsplash.com/photo-1596558450268-9c27524ba856?w=400&h=250&fit=crop' },
   { id: 8, name: 'Brand Identity Starter Kit', category: 'Marketing', price: 55, description: 'Logo, color palette, and brand guidelines templates.', image: 'https://images.unsplash.com/photo-1634942537034-2531766767d1?w=400&h=250&fit=crop' },
   { id: 9, name: 'Content Calendar Pro', category: 'Marketing', price: 29, description: '12-month content calendar with post ideas for all platforms.', image: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&h=250&fit=crop' },
   { id: 10, name: 'Influencer Outreach Kit', category: 'Marketing', price: 42, description: 'DM scripts and email templates to land brand collaborations.', image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=250&fit=crop' },
@@ -93,7 +93,7 @@ const categories = ['All', 'Marketing', 'Course', 'E-Books', 'Business']
 const newReleases = [
   { id: 101, name: 'AI Content Creator Kit', category: 'Marketing', price: 55, badge: 'NEW', description: 'AI-powered templates to create viral content in minutes.', image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&h=250&fit=crop' },
   { id: 102, name: 'YouTube Shorts Masterpack', category: 'Marketing', price: 45, badge: 'NEW', description: 'Scripts, hooks & thumbnails for explosive YouTube growth.', image: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=400&h=250&fit=crop' },
-  { id: 103, name: 'WhatsApp Marketing Kit', category: 'Marketing', price: 42, badge: 'NEW', description: 'Broadcast templates and automation tips for WhatsApp business.', image: 'https://images.unsplash.com/photo-1611605698335-8441fbfd049b?w=400&h=250&fit=crop' },
+  { id: 103, name: 'WhatsApp Marketing Kit', category: 'Marketing', price: 42, badge: 'NEW', description: 'Broadcast templates and automation tips for WhatsApp business.', image: 'https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?w=400&h=250&fit=crop' },
   { id: 104, name: 'Notion Business OS', category: 'Business', price: 39, badge: 'NEW', description: 'All-in-one Notion workspace for managing your business.', image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&h=250&fit=crop' },
   { id: 105, name: 'Digital Product Launch Kit', category: 'Business', price: 69, badge: 'NEW', description: 'Everything you need to launch your first digital product.', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop' },
   { id: 106, name: 'ChatGPT Prompt Bible', category: 'E-Books', price: 19, badge: 'NEW', description: '500+ ChatGPT prompts for business, content, and coding.', image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&h=250&fit=crop' },
@@ -199,6 +199,10 @@ function App() {
     )
   }
 
+  const removeFromCart = (productId) => {
+    setCartItems((prev) => prev.filter((item) => item.id !== productId))
+  }
+
   const handlePlaceOrder = () => {
     if (cartItems.length === 0) return
     if (!paymentMethod) return
@@ -252,7 +256,7 @@ function App() {
               CONTACT US
             </button>
           </div>
-          <p>Get 10%- Off On Your First Purchase! Coupon code -&gt; DB30</p>
+          <h4>Get 10%- Off On Your First Purchase</h4>
         </div>
       </div>
 
@@ -442,10 +446,7 @@ function App() {
                 <p className="section-label">Featured Products</p>
                 <h3>Popular digital products on the home page</h3>
               </div>
-              <p className="section-meta">
-                {filteredProducts.length} product
-                {filteredProducts.length === 1 ? '' : 's'} found
-              </p>
+              <button type="button" className="ghost-button" onClick={() => setCurrentPage('shop')}>View All</button>
             </div>
 
             <div className="category-tabs">
@@ -462,16 +463,16 @@ function App() {
             </div>
 
             <div className="product-grid">
-              {filteredProducts.map((product) => (
+              {products.slice(0, 8).map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
 
-            {filteredProducts.length === 0 ? (
-              <div className="empty-state">
-                No products matched your search. Try another keyword.
-              </div>
-            ) : null}
+            <div className="view-more-wrap">
+              <button type="button" className="view-more-btn" onClick={() => setCurrentPage('shop')}>
+                View All Products →
+              </button>
+            </div>
           </section>
 
           {/* New Releases */}
@@ -575,26 +576,26 @@ function App() {
           ) : (
             <div className="cart-layout">
               <div className="cart-list">
+                <div className="cart-list-header">
+                  <span>{cartCount} item{cartCount > 1 ? 's' : ''} in cart</span>
+                  <button type="button" className="clear-cart-btn" onClick={() => setCartItems([])}>🗑 Clear All</button>
+                </div>
                 {cartItems.map((item) => (
                   <article key={item.id} className="cart-item">
                     {item.image && <img src={item.image} alt={item.name} className="cart-item__img" />}
-                    <div>
+                    <div className="cart-item__info">
                       <span className="product-category">{item.category}</span>
                       <h4>{item.name}</h4>
                       <p>Rs. {item.price.toFixed(2)} each</p>
                     </div>
-
                     <div className="cart-item__actions">
                       <div className="qty-box">
-                        <button type="button" onClick={() => updateQuantity(item.id, -1)}>
-                          -
-                        </button>
+                        <button type="button" onClick={() => updateQuantity(item.id, -1)}>-</button>
                         <span>{item.quantity}</span>
-                        <button type="button" onClick={() => updateQuantity(item.id, 1)}>
-                          +
-                        </button>
+                        <button type="button" onClick={() => updateQuantity(item.id, 1)}>+</button>
                       </div>
                       <strong>Rs. {(item.price * item.quantity).toFixed(2)}</strong>
+                      <button type="button" className="remove-btn" title="Remove" onClick={() => removeFromCart(item.id)}>✕</button>
                     </div>
                   </article>
                 ))}
