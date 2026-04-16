@@ -129,6 +129,7 @@ function App() {
   const [wishlist, setWishlist] = useState([])
   const [compareList, setCompareList] = useState([])
   const [quickViewProduct, setQuickViewProduct] = useState(null)
+  const [priceRange, setPriceRange] = useState([0, 200])
 
   const toggleWishlist = (product) => {
     setWishlist((prev) =>
@@ -158,9 +159,9 @@ function App() {
         `${product.name} ${product.category} ${product.description}`
           .toLowerCase()
           .includes(term)
-      return matchesCategory && matchesSearch
+      return matchesCategory && matchesSearch && product.price >= priceRange[0] && product.price <= priceRange[1]
     })
-  }, [searchTerm, selectedCategory, allProducts])
+  }, [searchTerm, selectedCategory, allProducts, priceRange])
 
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0)
   const cartTotal = cartItems.reduce(
@@ -534,6 +535,41 @@ function App() {
                     {category}
                   </button>
                 ))}
+              </div>
+
+              <div className="price-filter">
+                <h4>Filter by Price</h4>
+                <div className="price-filter__labels">
+                  <span>Min: <strong>Rs. {priceRange[0]}</strong></span>
+                  <span>Max: <strong>Rs. {priceRange[1]}</strong></span>
+                </div>
+                <div className="price-filter__sliders">
+                  <input
+                    type="range"
+                    min="0" max="200"
+                    value={priceRange[0]}
+                    onChange={(e) => {
+                      const val = Number(e.target.value)
+                      if (val < priceRange[1]) setPriceRange([val, priceRange[1]])
+                    }}
+                  />
+                  <input
+                    type="range"
+                    min="0" max="200"
+                    value={priceRange[1]}
+                    onChange={(e) => {
+                      const val = Number(e.target.value)
+                      if (val > priceRange[0]) setPriceRange([priceRange[0], val])
+                    }}
+                  />
+                </div>
+                <button
+                  type="button"
+                  className="price-reset-btn"
+                  onClick={() => setPriceRange([0, 200])}
+                >
+                  Reset Price
+                </button>
               </div>
             </aside>
 
