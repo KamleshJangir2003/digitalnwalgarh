@@ -1,6 +1,10 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import heroImg from './assets/hero.png'
 import './App.css'
+import LoginPage from './LoginPage'
+import RegisterPage from './RegisterPage'
+import UserDashboard from './UserDashboard'
+import AdminDashboard from './AdminDashboard'
 
 const products = [
   { id: 1, name: 'Instagram Growth Kit', category: 'Marketing', price: 49, description: 'Templates, hooks, and ready-to-sell content for creators.', image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&h=250&fit=crop' },
@@ -113,6 +117,28 @@ const trendingCourses = [
 ]
 
 function App() {
+  const [authUser, setAuthUser] = useState(null)
+  const [authPage, setAuthPage] = useState(null) // 'login' | 'register' | null
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    const saved = localStorage.getItem('authUser')
+    if (token && saved) setAuthUser(JSON.parse(saved))
+  }, [])
+
+  const handleLogin = (user) => {
+    localStorage.setItem('authUser', JSON.stringify(user))
+    setAuthUser(user)
+    setAuthPage(null)
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('authUser')
+    setAuthUser(null)
+    setCurrentPage('home')
+  }
+
   const [searchTerm, setSearchTerm] = useState('')
   const [cartItems, setCartItems] = useState([])
   const [selectedCategory, setSelectedCategory] = useState('All')
@@ -250,10 +276,10 @@ function App() {
       <div className="top-strip">
         <div className="container top-strip__inner">
           <div className="top-strip__links">
-            <button type="button" onClick={() => setCurrentPage('home')}>
+            <button type="button" onClick={() => { setAuthPage(null); setCurrentPage('home') }}>
               JOIN US
             </button>
-            <button type="button" onClick={() => setCurrentPage('contact')}>
+            <button type="button" onClick={() => { setAuthPage(null); setCurrentPage('contact') }}>
               CONTACT US
             </button>
           </div>
@@ -314,16 +340,22 @@ function App() {
           </div>
 
           <div className="header-actions">
-            <button type="button" onClick={() => setCurrentPage('checkout')}>
-              LOGIN / REGISTER
-            </button>
-            <button type="button" aria-label="Wishlist" onClick={() => setCurrentPage('wishlist')}>
+            {authUser ? (
+              <button type="button" onClick={() => setCurrentPage('dashboard')}>
+                👤 {authUser.name.split(' ')[0]}
+              </button>
+            ) : (
+              <button type="button" onClick={() => setAuthPage('login')}>
+                LOGIN / REGISTER
+              </button>
+            )}
+            <button type="button" aria-label="Wishlist" onClick={() => { setAuthPage(null); setCurrentPage('wishlist') }}>
               ♡ {wishlist.length > 0 && <span className="header-badge">{wishlist.length}</span>}
             </button>
             <button
               type="button"
               aria-label="Cart"
-              onClick={() => setCurrentPage('cart')}
+              onClick={() => { setAuthPage(null); setCurrentPage('cart') }}
             >
               🛒
             </button>
@@ -337,42 +369,42 @@ function App() {
             <button
               type="button"
               className={currentPage === 'home' ? 'active' : ''}
-              onClick={() => setCurrentPage('home')}
+              onClick={() => { setAuthPage(null); setCurrentPage('home') }}
             >
               HOME
             </button>
             <button
               type="button"
               className={currentPage === 'shop' ? 'active' : ''}
-              onClick={() => setCurrentPage('shop')}
+              onClick={() => { setAuthPage(null); setCurrentPage('shop') }}
             >
               SHOP
             </button>
             <button
               type="button"
               className={currentPage === 'about' ? 'active' : ''}
-              onClick={() => setCurrentPage('about')}
+              onClick={() => { setAuthPage(null); setCurrentPage('about') }}
             >
               ABOUT US
             </button>
             <button
               type="button"
               className={currentPage === 'contact' ? 'active' : ''}
-              onClick={() => setCurrentPage('contact')}
+              onClick={() => { setAuthPage(null); setCurrentPage('contact') }}
             >
               CONTACT US
             </button>
             <button
               type="button"
               className={currentPage === 'checkout' ? 'active' : ''}
-              onClick={() => setCurrentPage('checkout')}
+              onClick={() => { setAuthPage(null); setCurrentPage('checkout') }}
             >
               CHECKOUT
             </button>
             <button
               type="button"
               className={currentPage === 'cart' ? 'active' : ''}
-              onClick={() => setCurrentPage('cart')}
+              onClick={() => { setAuthPage(null); setCurrentPage('cart') }}
             >
               CART
             </button>
@@ -415,7 +447,7 @@ function App() {
         </div>
       </header>
 
-      {currentPage === 'home' ? (
+      {!authPage && currentPage === 'home' ? (
         <>
           <section className="hero-section container">
             <div className="hero-copy">
@@ -512,7 +544,7 @@ function App() {
         </>
       ) : null}
 
-      {currentPage === 'shop' ? (
+      {!authPage && currentPage === 'shop' ? (
         <section className="shop-page container">
           <div className="page-header">
             <div>
@@ -604,7 +636,7 @@ function App() {
         </section>
       ) : null}
 
-      {currentPage === 'cart' ? (
+      {!authPage && currentPage === 'cart' ? (
         <section className="cart-page container">
           <div className="page-header">
             <div>
@@ -681,7 +713,7 @@ function App() {
         </section>
       ) : null}
 
-      {currentPage === 'checkout' ? (
+      {!authPage && currentPage === 'checkout' ? (
         <section className="checkout-page container">
           <div className="page-header">
             <div>
@@ -784,7 +816,7 @@ function App() {
         </section>
       ) : null}
 
-      {currentPage === 'about' ? (
+      {!authPage && currentPage === 'about' ? (
         <section className="about-page">
 
           {/* Hero Banner */}
@@ -878,7 +910,7 @@ function App() {
         </section>
       ) : null}
 
-      {currentPage === 'policies' ? (
+      {!authPage && currentPage === 'policies' ? (
         <section className="policies-page container">
           <div className="page-header">
             <div>
@@ -911,7 +943,7 @@ function App() {
         </section>
       ) : null}
 
-      {currentPage === 'shipping' ? (
+      {!authPage && currentPage === 'shipping' ? (
         <section className="policy-detail container">
           <div className="page-header">
             <div><p className="section-label">Policy</p><h3>Shipping &amp; Delivery Policy</h3></div>
@@ -942,7 +974,7 @@ function App() {
         </section>
       ) : null}
 
-      {currentPage === 'refund' ? (
+      {!authPage && currentPage === 'refund' ? (
         <section className="policy-detail container">
           <div className="page-header">
             <div><p className="section-label">Policy</p><h3>Refund Policy</h3></div>
@@ -973,7 +1005,7 @@ function App() {
         </section>
       ) : null}
 
-      {currentPage === 'terms' ? (
+      {!authPage && currentPage === 'terms' ? (
         <section className="policy-detail container">
           <div className="page-header">
             <div><p className="section-label">Policy</p><h3>Terms And Conditions</h3></div>
@@ -1004,7 +1036,7 @@ function App() {
         </section>
       ) : null}
 
-      {currentPage === 'cancellation' ? (
+      {!authPage && currentPage === 'cancellation' ? (
         <section className="policy-detail container">
           <div className="page-header">
             <div><p className="section-label">Policy</p><h3>Cancellation And Refund</h3></div>
@@ -1035,7 +1067,7 @@ function App() {
         </section>
       ) : null}
 
-      {currentPage === 'privacy' ? (
+      {!authPage && currentPage === 'privacy' ? (
         <section className="policy-detail container">
           <div className="page-header">
             <div><p className="section-label">Policy</p><h3>Privacy Policy</h3></div>
@@ -1070,7 +1102,7 @@ function App() {
         </section>
       ) : null}
 
-      {currentPage === 'contact' ? (
+      {!authPage && currentPage === 'contact' ? (
         <section className="contact-page container">
           <div className="page-header">
             <div>
@@ -1154,6 +1186,21 @@ function App() {
         </section>
       ) : null}
 
+      {/* Auth Pages */}
+      {authPage === 'login' && (
+        <LoginPage onLogin={handleLogin} onSwitch={() => setAuthPage('register')} />
+      )}
+      {authPage === 'register' && (
+        <RegisterPage onLogin={handleLogin} onSwitch={() => setAuthPage('login')} />
+      )}
+
+      {/* Dashboard */}
+      {!authPage && currentPage === 'dashboard' && authUser && (
+        authUser.role === 'admin'
+          ? <AdminDashboard user={authUser} onLogout={handleLogout} />
+          : <UserDashboard user={authUser} onLogout={handleLogout} onShop={() => setCurrentPage('shop')} />
+      )}
+
       {/* Quick View Modal */}
       {quickViewProduct && (
         <div className="modal-overlay" onClick={() => setQuickViewProduct(null)}>
@@ -1183,7 +1230,7 @@ function App() {
       )}
 
       {/* Wishlist Page */}
-      {currentPage === 'wishlist' ? (
+      {!authPage && currentPage === 'wishlist' ? (
         <section className="container">
           <div className="page-header">
             <div><p className="section-label">My Wishlist</p><h3>Saved Products ❤️</h3></div>
@@ -1200,7 +1247,7 @@ function App() {
       ) : null}
 
       {/* Compare Page */}
-      {currentPage === 'compare' ? (
+      {!authPage && currentPage === 'compare' ? (
         <section className="container">
           <div className="page-header">
             <div><p className="section-label">Compare</p><h3>Product Comparison ⇄</h3></div>
