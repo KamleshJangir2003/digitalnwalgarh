@@ -158,6 +158,7 @@ function App() {
   const [compareList, setCompareList] = useState([])
   const [quickViewProduct, setQuickViewProduct] = useState(null)
   const [priceRange, setPriceRange] = useState([0, 200])
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
 
   const toggleWishlist = (product) => {
     setWishlist((prev) =>
@@ -383,49 +384,58 @@ function App() {
             <span>{cartCount} items</span>
             <span>Rs. {cartTotal.toFixed(2)}</span>
           </div>
+
+          <button
+            className="hamburger"
+            type="button"
+            aria-label="Toggle menu"
+            onClick={() => setMobileNavOpen(v => !v)}
+          >
+            {mobileNavOpen ? '✕' : '☰'}
+          </button>
         </div>
 
-        <div className="container nav-row">
+        <div className={`container nav-row${mobileNavOpen ? ' nav-row--open' : ''}`}>
           <nav className="main-nav" aria-label="Primary">
             <button
               type="button"
               className={currentPage === 'home' ? 'active' : ''}
-              onClick={() => { setAuthPage(null); setCurrentPage('home') }}
+              onClick={() => { setAuthPage(null); setCurrentPage('home'); setMobileNavOpen(false) }}
             >
               HOME
             </button>
             <button
               type="button"
               className={currentPage === 'shop' ? 'active' : ''}
-              onClick={() => { setAuthPage(null); setCurrentPage('shop') }}
+              onClick={() => { setAuthPage(null); setCurrentPage('shop'); setMobileNavOpen(false) }}
             >
               SHOP
             </button>
             <button
               type="button"
               className={currentPage === 'about' ? 'active' : ''}
-              onClick={() => { setAuthPage(null); setCurrentPage('about') }}
+              onClick={() => { setAuthPage(null); setCurrentPage('about'); setMobileNavOpen(false) }}
             >
               ABOUT US
             </button>
             <button
               type="button"
               className={currentPage === 'contact' ? 'active' : ''}
-              onClick={() => { setAuthPage(null); setCurrentPage('contact') }}
+              onClick={() => { setAuthPage(null); setCurrentPage('contact'); setMobileNavOpen(false) }}
             >
               CONTACT US
             </button>
             <button
               type="button"
               className={currentPage === 'checkout' ? 'active' : ''}
-              onClick={() => { setAuthPage(null); setCurrentPage('checkout') }}
+              onClick={() => { setAuthPage(null); setCurrentPage('checkout'); setMobileNavOpen(false) }}
             >
               CHECKOUT
             </button>
             <button
               type="button"
               className={currentPage === 'cart' ? 'active' : ''}
-              onClick={() => { setAuthPage(null); setCurrentPage('cart') }}
+              onClick={() => { setAuthPage(null); setCurrentPage('cart'); setMobileNavOpen(false) }}
             >
               CART
             </button>
@@ -1016,7 +1026,7 @@ function App() {
             </div>
             <div className="policy-section">
               <h4>📩 How to Request a Refund</h4>
-              <p>Email us at <strong>support@DigiBuddy.example</strong> within <strong>48 hours</strong> of purchase with your order ID and a description of the issue. Our team will review and respond within 2 business days.</p>
+              <p>Email us at <strong>inkshedresearch@gmail.com</strong> within <strong>48 hours</strong> of purchase with your order ID and a description of the issue. Our team will review and respond within 2 business days.</p>
             </div>
             <div className="policy-section">
               <h4>💳 Refund Processing Time</h4>
@@ -1071,7 +1081,7 @@ function App() {
             <div className="policy-section">
               <h4>📩 How to Cancel</h4>
               <ul>
-                <li>Email us at <strong>support@DigiBuddy.example</strong> with your Order ID.</li>
+                <li>Email us at <strong>inkshedresearch@gmail.com</strong> with your Order ID.</li>
                 <li>Mention the reason for cancellation.</li>
                 <li>Our team will confirm the cancellation within a few hours.</li>
               </ul>
@@ -1200,10 +1210,10 @@ function App() {
             <aside className="contact-info-card">
               <h4>Our Support</h4>
               <p>
-                Email: <strong>support@dihook.example</strong>
+                Email: <strong>inkshedresearch@gmail.com</strong>
               </p>
               <p>
-                Phone: <strong>+1 (000) 000-0000</strong>
+                Phone: <strong>+91 7597074959</strong>
               </p>
               <p>Hours: Mon - Sat, 10:00 AM - 6:00 PM</p>
             </aside>
@@ -1409,8 +1419,8 @@ function App() {
             <div className="footer-col">
               <h5>Contact Us</h5>
               <ul className="footer-contact-list">
-                <li>📧 <span>support@DigiBuddy.example</span></li>
-                <li>📞 <span>+1 (000) 000-0000</span></li>
+                <li>📧 <span>inkshedresearch@gmail.com</span></li>
+                <li>📞 <span>+91 7597074959</span></li>
                 <li>🕐 <span>Mon – Sat, 10AM – 6PM</span></li>
                 <li>🌍 <span>Worldwide Digital Delivery</span></li>
               </ul>
