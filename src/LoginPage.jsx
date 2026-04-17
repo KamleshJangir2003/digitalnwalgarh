@@ -30,27 +30,38 @@ export default function LoginPage({ onLogin, onSwitch }) {
   }
 
   return (
-    <section className="auth-page container">
+    <section className="auth-page">
       <div className="auth-card">
-        <h2>Login to DigiBuddy</h2>
-        <p className="auth-sub">Welcome back! Enter your credentials.</p>
+        <div className="auth-logo">
+          <div className="auth-logo-dot">🛍</div>
+          <span>DigiBuddy</span>
+        </div>
+        <h2>Welcome back!</h2>
+        <p className="auth-sub">Login to continue shopping</p>
         {error && <div className="auth-error">{error}</div>}
-        <form onSubmit={handleSubmit} className="checkout-form">
-          <input
-            type="email" placeholder="Email Address" required
-            value={form.email} onChange={(e) => setForm(v => ({ ...v, email: e.target.value }))}
-          />
-          <input
-            type="password" placeholder="Password" required
-            value={form.password} onChange={(e) => setForm(v => ({ ...v, password: e.target.value }))}
-          />
-          <button type="submit" className="primary-action" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="auth-field">
+            <label>Email Address</label>
+            <input
+              type="email" placeholder="you@example.com" required
+              value={form.email} onChange={(e) => setForm(v => ({ ...v, email: e.target.value }))}
+            />
+          </div>
+          <div className="auth-field">
+            <label>Password</label>
+            <input
+              type="password" placeholder="Enter your password" required
+              value={form.password} onChange={(e) => setForm(v => ({ ...v, password: e.target.value }))}
+            />
+          </div>
+          <button type="submit" className="auth-btn" disabled={loading}>
+            {loading ? 'Logging in...' : 'Login →'}
           </button>
         </form>
+        <div className="auth-divider">or</div>
         <p className="auth-switch">
           Don't have an account?{' '}
-          <button type="button" className="auth-link" onClick={onSwitch}>Register here</button>
+          <button type="button" className="auth-link" onClick={onSwitch}>Create one free</button>
         </p>
       </div>
     </section>
