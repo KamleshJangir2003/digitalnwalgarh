@@ -121,6 +121,8 @@ const trendingCourses = [
 function App() {
   const [authUser, setAuthUser] = useState(null)
   const [authPage, setAuthPage] = useState(null) // 'login' | 'register' | null
+  const [pendingCheckout, setPendingCheckout] = useState(false)
+  const [showLoginModal, setShowLoginModal] = useState(false)
 
   useEffect(() => {
     const token = localStorage.getItem('token')
@@ -132,6 +134,8 @@ function App() {
     localStorage.setItem('authUser', JSON.stringify(user))
     setAuthUser(user)
     setAuthPage(null)
+    setShowLoginModal(false)
+    if (pendingCheckout) { setPendingCheckout(false); setCurrentPage('checkout') }
   }
 
   const handleLogout = () => {
@@ -367,7 +371,7 @@ function App() {
                 👤 {authUser.name.split(' ')[0]}
               </button>
             ) : (
-              <button type="button" onClick={() => setAuthPage('login')}>
+              <button type="button" onClick={() => setShowLoginModal(true)}>
                 LOGIN / REGISTER
               </button>
             )}
@@ -734,7 +738,10 @@ function App() {
                 <button
                   type="button"
                   className="primary-action"
-                  onClick={() => setCurrentPage('checkout')}
+                  onClick={() => {
+                    if (!authUser) { setPendingCheckout(true); setShowLoginModal(true); return }
+                    setCurrentPage('checkout')
+                  }}
                 >
                   Proceed to Checkout
                 </button>
@@ -1222,11 +1229,13 @@ function App() {
       ) : null}
 
       {/* Auth Pages */}
-      {authPage === 'login' && (
-        <LoginPage onLogin={handleLogin} onSwitch={() => setAuthPage('register')} />
-      )}
       {authPage === 'register' && (
-        <RegisterPage onLogin={handleLogin} onSwitch={() => setAuthPage('login')} />
+        <div className="modal-overlay" onClick={() => setAuthPage(null)}>
+          <div className="modal-box" style={{maxWidth:'460px',padding:'0'}} onClick={(e) => e.stopPropagation()}>
+            <button type="button" className="modal-close" onClick={() => setAuthPage(null)}>✕</button>
+            <RegisterPage onLogin={handleLogin} onSwitch={() => { setAuthPage(null); setShowLoginModal(true) }} />
+          </div>
+        </div>
       )}
       {authPage === 'admin-login' && (
         <AdminLoginPage onLogin={handleLogin} onBack={() => setAuthPage(null)} />
@@ -1235,6 +1244,19 @@ function App() {
       {/* Dashboard */}
       {!authPage && currentPage === 'dashboard' && authUser && (
         <UserDashboard user={authUser} onLogout={handleLogout} onShop={() => setCurrentPage('shop')} />
+      )}
+
+      {/* Login Modal */}
+      {showLoginModal && (
+        <div className="modal-overlay" onClick={() => { setShowLoginModal(false); setPendingCheckout(false) }}>
+          <div className="modal-box" style={{maxWidth:'460px',padding:'0'}} onClick={(e) => e.stopPropagation()}>
+            <button type="button" className="modal-close" onClick={() => { setShowLoginModal(false); setPendingCheckout(false) }}>✕</button>
+            <LoginPage
+              onLogin={handleLogin}
+              onSwitch={() => { setShowLoginModal(false); setAuthPage('register') }}
+            />
+          </div>
+        </div>
       )}
 
       {/* Quick View Modal */}
