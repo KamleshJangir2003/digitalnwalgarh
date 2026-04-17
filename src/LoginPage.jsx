@@ -32,7 +32,7 @@ export default function LoginPage({ onLogin, onSwitch }) {
   return (
     <section className="auth-page container">
       <div className="auth-card">
-        <h2>Login to DigiHook</h2>
+        <h2>Login to DigiBuddy</h2>
         <p className="auth-sub">Welcome back! Enter your credentials.</p>
         {error && <div className="auth-error">{error}</div>}
         <form onSubmit={handleSubmit} className="checkout-form">

@@ -33,7 +33,7 @@ export default function RegisterPage({ onLogin, onSwitch }) {
     <section className="auth-page container">
       <div className="auth-card">
         <h2>Create Account</h2>
-        <p className="auth-sub">Join DigiHook and start selling digital products!</p>
+        <p className="auth-sub">Join DigiBuddy and start selling digital products!</p>
         {error && <div className="auth-error">{error}</div>}
         <form onSubmit={handleSubmit} className="checkout-form">
           <input

@@ -1,5 +1,6 @@
 import { useMemo, useState, useEffect } from 'react'
 import heroImg from './assets/hero.png'
+import digiLogo from './assets/digilogo-removebg-preview.png'
 import './App.css'
 import LoginPage from './LoginPage'
 import RegisterPage from './RegisterPage'
@@ -309,7 +310,7 @@ function App() {
 
       <header className="site-header">
         <div className="container header-main">
-          <div className="brand-mark">DH</div>
+          <img src={digiLogo} alt="DigiBuddy" className="brand-logo" />
 
           <div className="search-panel">
             <input
@@ -471,12 +472,12 @@ function App() {
         <>
           <section className="hero-section container">
             <div className="hero-copy">
-              <h1>Welcome to DigiHook Store! 🚀</h1>
-              <h2>Boost Your Business with Premium Digital Products from DigiHook!</h2>
+              <h1>Welcome to DigiBuddy Store! 🚀</h1>
+              <h2>Boost Your Business with Premium Digital Products from DigiBuddy!</h2>
               <p>🚀</p>
               <p>
                 Purchase high-quality <strong>business growth software</strong>{' '}
-                and other digital tools from DigiHook, then resell them and{' '}
+                and other digital tools from DigiBuddy, then resell them and{' '}
                 <strong>keep 100% of the profits!</strong> 🔥
               </p>
               <button
@@ -569,7 +570,7 @@ function App() {
           <div className="page-header">
             <div>
               <p className="section-label">Shop</p>
-              <h3>All DigiHook digital products</h3>
+              <h3>All DigiBuddy digital products</h3>
             </div>
           </div>
 
@@ -843,13 +844,13 @@ function App() {
           <div className="about-hero">
             <div className="container about-hero__inner">
               <div className="about-hero__copy">
-                <p className="section-label">About DigiHook</p>
+                <p className="section-label">About DigiBuddy</p>
                 <h2>We Help You Build a Digital Business from Scratch 🚀</h2>
-                <p>DigiHook is a premium digital products marketplace where creators, freelancers, and entrepreneurs buy ready-made tools and resell them for 100% profit.</p>
+                <p>DigiBuddy is a premium digital products marketplace where creators, freelancers, and entrepreneurs buy ready-made tools and resell them for 100% profit.</p>
                 <button type="button" className="shop-button" onClick={() => setCurrentPage('shop')}>Explore Products</button>
               </div>
               <div className="about-hero__img">
-                <img src={heroImg} alt="DigiHook About" />
+                <img src={heroImg} alt="DigiBuddy About" />
               </div>
             </div>
           </div>
@@ -879,8 +880,8 @@ function App() {
             <div className="about-story__copy">
               <p className="section-label">Our Story</p>
               <h3>Started with a Simple Idea</h3>
-              <p>DigiHook was founded with one mission — make it easy for anyone to start an online business without creating products from scratch. We curate high-quality digital tools so you can focus on selling and growing.</p>
-              <p>From Instagram growth kits to full business toolkits, every product on DigiHook is handpicked, tested, and ready to resell. No experience needed — just buy, brand, and sell.</p>
+              <p>DigiBuddy was founded with one mission — make it easy for anyone to start an online business without creating products from scratch. We curate high-quality digital tools so you can focus on selling and growing.</p>
+              <p>From Instagram growth kits to full business toolkits, every product on DigiBuddy is handpicked, tested, and ready to resell. No experience needed — just buy, brand, and sell.</p>
               <div className="about-checks">
                 {['No inventory needed', 'Instant digital delivery', 'Resell & keep 100% profit', 'Worldwide access'].map((item) => (
                   <div key={item} className="about-check">✅ {item}</div>
@@ -919,7 +920,7 @@ function App() {
           <div className="container about-cta">
             <div className="about-cta__box">
               <h3>Ready to Start Your Digital Business?</h3>
-              <p>Join thousands of sellers who are already making money with DigiHook products.</p>
+              <p>Join thousands of sellers who are already making money with DigiBuddy products.</p>
               <div className="about-cta__btns">
                 <button type="button" className="primary-action" onClick={() => setCurrentPage('shop')}>Browse Products</button>
                 <button type="button" className="ghost-button" onClick={() => setCurrentPage('contact')}>Contact Us</button>
@@ -972,7 +973,7 @@ function App() {
           <div className="policy-content">
             <div className="policy-section">
               <h4>📦 Digital Delivery</h4>
-              <p>All DigiHook products are <strong>100% digital</strong>. There is no physical shipping involved. Once your payment is confirmed, your product will be delivered directly to your registered email address.</p>
+              <p>All DigiBuddy products are <strong>100% digital</strong>. There is no physical shipping involved. Once your payment is confirmed, your product will be delivered directly to your registered email address.</p>
             </div>
             <div className="policy-section">
               <h4>⏱ Delivery Time</h4>
@@ -988,7 +989,7 @@ function App() {
             </div>
             <div className="policy-section">
               <h4>🌍 Availability</h4>
-              <p>DigiHook delivers to customers <strong>worldwide</strong>. Since all products are digital, there are no geographical restrictions or customs delays.</p>
+              <p>DigiBuddy delivers to customers <strong>worldwide</strong>. Since all products are digital, there are no geographical restrictions or customs delays.</p>
             </div>
           </div>
         </section>
@@ -1015,7 +1016,7 @@ function App() {
             </div>
             <div className="policy-section">
               <h4>📩 How to Request a Refund</h4>
-              <p>Email us at <strong>support@digihook.example</strong> within <strong>48 hours</strong> of purchase with your order ID and a description of the issue. Our team will review and respond within 2 business days.</p>
+              <p>Email us at <strong>support@DigiBuddy.example</strong> within <strong>48 hours</strong> of purchase with your order ID and a description of the issue. Our team will review and respond within 2 business days.</p>
             </div>
             <div className="policy-section">
               <h4>💳 Refund Processing Time</h4>
@@ -1034,7 +1035,7 @@ function App() {
           <div className="policy-content">
             <div className="policy-section">
               <h4>📋 Acceptance of Terms</h4>
-              <p>By accessing or purchasing from DigiHook, you agree to be bound by these Terms and Conditions. If you do not agree, please do not use our platform.</p>
+              <p>By accessing or purchasing from DigiBuddy, you agree to be bound by these Terms and Conditions. If you do not agree, please do not use our platform.</p>
             </div>
             <div className="policy-section">
               <h4>🛒 Use of Products</h4>
@@ -1046,11 +1047,11 @@ function App() {
             </div>
             <div className="policy-section">
               <h4>⚖️ Intellectual Property</h4>
-              <p>All content on DigiHook — including product files, descriptions, images, and branding — is the intellectual property of DigiHook. Unauthorized use may result in legal action.</p>
+              <p>All content on DigiBuddy — including product files, descriptions, images, and branding — is the intellectual property of DigiBuddy. Unauthorized use may result in legal action.</p>
             </div>
             <div className="policy-section">
               <h4>🔄 Changes to Terms</h4>
-              <p>DigiHook reserves the right to update these Terms at any time. Continued use of the platform after changes constitutes your acceptance of the new Terms.</p>
+              <p>DigiBuddy reserves the right to update these Terms at any time. Continued use of the platform after changes constitutes your acceptance of the new Terms.</p>
             </div>
           </div>
         </section>
@@ -1070,7 +1071,7 @@ function App() {
             <div className="policy-section">
               <h4>📩 How to Cancel</h4>
               <ul>
-                <li>Email us at <strong>support@digihook.example</strong> with your Order ID.</li>
+                <li>Email us at <strong>support@DigiBuddy.example</strong> with your Order ID.</li>
                 <li>Mention the reason for cancellation.</li>
                 <li>Our team will confirm the cancellation within a few hours.</li>
               </ul>
@@ -1116,7 +1117,7 @@ function App() {
             </div>
             <div className="policy-section">
               <h4>📬 Contact About Privacy</h4>
-              <p>If you have any questions about how your data is used, email us at <strong>privacy@digihook.example</strong>. We will respond within 2 business days.</p>
+              <p>If you have any questions about how your data is used, email us at <strong>privacy@DigiBuddy.example</strong>. We will respond within 2 business days.</p>
             </div>
           </div>
         </section>
@@ -1340,8 +1341,8 @@ function App() {
 
             {/* Brand */}
             <div className="footer-brand">
-              <div className="brand-mark">DH</div>
-              <p>DigiHook is your one-stop marketplace for premium digital products. Buy, brand, and resell — keep 100% of the profits.</p>
+              <img src={digiLogo} alt="DigiBuddy" className="brand-logo" />
+              <p>DigiBuddy is your one-stop marketplace for premium digital products. Buy, brand, and resell — keep 100% of the profits.</p>
               <div className="footer-socials">
                 <a href="#" aria-label="UPI" title="UPI">
                   <svg viewBox="0 0 48 20" width="48" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1408,7 +1409,7 @@ function App() {
             <div className="footer-col">
               <h5>Contact Us</h5>
               <ul className="footer-contact-list">
-                <li>📧 <span>support@digihook.example</span></li>
+                <li>📧 <span>support@DigiBuddy.example</span></li>
                 <li>📞 <span>+1 (000) 000-0000</span></li>
                 <li>🕐 <span>Mon – Sat, 10AM – 6PM</span></li>
                 <li>🌍 <span>Worldwide Digital Delivery</span></li>
@@ -1423,7 +1424,7 @@ function App() {
 
         <div className="footer-bottom">
           <div className="container footer-bottom__inner">
-            <p>© {new Date().getFullYear()} DigiHook. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} DigiBuddy. All rights reserved.</p>
             <p>Made with ❤️ for digital entrepreneurs worldwide.</p>
             <button type="button" className="admin-secret-link" onClick={() => setAuthPage('admin-login')}>Admin</button>
           </div>

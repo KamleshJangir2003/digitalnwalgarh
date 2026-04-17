@@ -131,7 +131,7 @@ export default function AdminDashboard({ user, onLogout }) {
       {/* ── SIDEBAR ── */}
       <aside className="admin-sidebar">
         <div className="admin-sidebar__brand">
-          <h1>⚡ DigiHook</h1>
+          <h1>⚡ DigiBuddy</h1>
           <p>Admin Panel</p>
         </div>
 
