@@ -311,7 +311,7 @@ function App() {
 
       <header className="site-header">
         <div className="container header-main">
-          <img src={digiLogo} alt="DigiBuddy" className="brand-logo" />
+          <img src={digiLogo} alt="DigiBuddy" className="brand-logo" style={{cursor:'pointer'}} onClick={() => { setAuthPage(null); setCurrentPage('home'); setMobileNavOpen(false) }} />
 
           <div className="search-panel">
             <input
@@ -1351,7 +1351,7 @@ function App() {
 
             {/* Brand */}
             <div className="footer-brand">
-              <img src={digiLogo} alt="DigiBuddy" className="brand-logo" />
+              <img src={digiLogo} alt="DigiBuddy" className="brand-logo" style={{cursor:'pointer'}} onClick={() => { setCurrentPage('home'); window.scrollTo(0,0) }} />
               <p>DigiBuddy is your one-stop marketplace for premium digital products. Buy, brand, and resell — keep 100% of the profits.</p>
               <div className="footer-socials">
                 <a href="#" aria-label="UPI" title="UPI">
