@@ -2,6 +2,12 @@ const router = require('express').Router()
 const Order = require('../models/Order')
 const Contact = require('../models/Contact')
 const { authMiddleware, adminMiddleware } = require('../middleware/auth')
+const nodemailer = require('nodemailer')
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
+})
 
 // Place order (any logged in user)
 router.post('/orders', authMiddleware, async (req, res) => {
@@ -46,6 +52,22 @@ router.post('/contact', async (req, res) => {
     const { name, email, message } = req.body
     await Contact.create({ name, email, message })
     res.status(201).json({ message: 'Message received' })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
+// Admin: reply to contact message
+router.post('/contact/reply', authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const { to, name, message } = req.body
+    await transporter.sendMail({
+      from: `"DigiHook Admin" <${process.env.EMAIL_USER}>`,
+      to,
+      subject: 'Reply from DigiHook Support',
+      html: `<p>Hi <strong>${name}</strong>,</p><p>${message}</p><br/><p>— DigiHook Support Team</p>`,
+    })
+    res.json({ message: 'Reply sent' })
   } catch (err) {
     res.status(500).json({ message: err.message })
   }

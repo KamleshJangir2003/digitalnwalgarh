@@ -98,6 +98,29 @@ export default function AdminDashboard({ user, onLogout }) {
     setOrders(prev => prev.map(o => o._id === id ? { ...o, status: newStatus } : o))
   }
 
+  const [replyingTo, setReplyingTo] = useState(null)
+  const [replyText, setReplyText] = useState('')
+  const [replySending, setReplySending] = useState(false)
+
+  const handleReply = async (m) => {
+    if (!replyText.trim()) return
+    setReplySending(true)
+    try {
+      await fetch(`${SHOP_API}/contact/reply`, {
+        method: 'POST',
+        headers: { ...headers, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ to: m.email, name: m.name, message: replyText }),
+      })
+      setReplyingTo(null)
+      setReplyText('')
+      alert(`Reply sent to ${m.email}`)
+    } catch (err) {
+      alert('Failed to send reply')
+    } finally {
+      setReplySending(false)
+    }
+  }
+
   const revenue = orders.reduce((sum, o) => sum + (o.total || 0), 0)
 
   const tabLabel = NAV.find(n => n.key === tab)?.label || ''
@@ -356,6 +379,31 @@ export default function AdminDashboard({ user, onLogout }) {
                       <h4>{m.name} <span style={{ color: '#64748b', fontWeight: 400 }}>— {m.email}</span></h4>
                       <p>{m.message}</p>
                       <small>{new Date(m.createdAt).toLocaleString()}</small>
+                      {replyingTo === m._id ? (
+                        <div style={{ marginTop: '.75rem', display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
+                          <textarea
+                            rows={3}
+                            placeholder={`Reply to ${m.name}...`}
+                            value={replyText}
+                            onChange={e => setReplyText(e.target.value)}
+                            style={{ background: '#1a1d27', border: '1px solid #2d3148', color: '#e2e8f0', borderRadius: 6, padding: '.5rem .75rem', fontSize: '.83rem', resize: 'vertical' }}
+                          />
+                          <div style={{ display: 'flex', gap: '.5rem' }}>
+                            <button type="button" className="admin-submit-btn"
+                              style={{ padding: '.4rem 1rem', fontSize: '.8rem' }}
+                              onClick={() => handleReply(m)} disabled={replySending}>
+                              {replySending ? 'Sending...' : '📤 Send Reply'}
+                            </button>
+                            <button type="button" className="a-del-btn"
+                              style={{ padding: '.4rem .75rem' }}
+                              onClick={() => { setReplyingTo(null); setReplyText('') }}>Cancel</button>
+                          </div>
+                        </div>
+                      ) : (
+                        <button type="button" className="admin-add-btn"
+                          style={{ marginTop: '.5rem', fontSize: '.78rem', padding: '.3rem .75rem' }}
+                          onClick={() => { setReplyingTo(m._id); setReplyText('') }}>✉ Reply</button>
+                      )}
                     </div>
                     <button type="button" className="a-del-btn" onClick={() => handleDeleteMessage(m._id)}>🗑</button>
                   </div>
